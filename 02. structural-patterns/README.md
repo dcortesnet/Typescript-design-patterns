@@ -1,0 +1,3 @@
+# Structural patterns
+
+Los patrones estructurales (structural patterns en inglés) son un grupo de patrones de diseño en programación que se enfocan en cómo componer objetos y clases para formar estructuras más grandes y complejas. Estos patrones se centran en la composición de objetos para crear relaciones más flexibles y eficientes entre ellos, mientras se minimiza la complejidad y la dependencia directa entre las clases.
