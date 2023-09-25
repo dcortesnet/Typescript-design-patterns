@@ -1,21 +1,21 @@
-// Receiver
-class Light {
-  turnOn() {
-    console.log("Light is on");
-  }
-
-  turnOff() {
-    console.log("Light is off");
-  }
-}
-
-// Command interface
+// Interfaz Command
 interface Command {
   execute(): void;
 }
 
-// Concrete Commands
-class TurnOnCommand implements Command {
+// Receiver (Receptor) - Clase que realiza la acción concreta
+class Light {
+  turnOn() {
+    console.log("Light on");
+  }
+
+  turnOff() {
+    console.log("Light off");
+  }
+}
+
+// Concrete Commands (Comandos Concretos)
+class TurnOnLightCommand implements Command {
   private light: Light;
 
   constructor(light: Light) {
@@ -27,7 +27,7 @@ class TurnOnCommand implements Command {
   }
 }
 
-class TurnOffCommand implements Command {
+class TurnOffLightCommand implements Command {
   private light: Light;
 
   constructor(light: Light) {
@@ -39,28 +39,29 @@ class TurnOffCommand implements Command {
   }
 }
 
-// Invoker
+// Invoker (Invocador) - Clase que ejecuta los comandos
 class RemoteControl {
-  private commands: Command[] = [];
+  private command!: Command;
 
-  addCommand(command: Command) {
-    this.commands.push(command);
+  setCommand(command: Command) {
+    this.command = command;
   }
 
   pressButton() {
-    for (const command of this.commands) {
-      command.execute();
-    }
+    console.log("Pressing the button on the remote control.");
+    this.command.execute();
   }
 }
 
-// Usage
-const light = new Light();
-const turnOnCommand = new TurnOnCommand(light);
-const turnOffCommand = new TurnOffCommand(light);
+// Client
+const livingRoomLight = new Light();
+const turnOnCommand = new TurnOnLightCommand(livingRoomLight);
+const turnOffCommand = new TurnOffLightCommand(livingRoomLight);
 
-const remote = new RemoteControl();
-remote.addCommand(turnOnCommand);
-remote.addCommand(turnOffCommand);
+const remoteControl = new RemoteControl();
 
-remote.pressButton(); // Output: Light is on Light is off
+remoteControl.setCommand(turnOnCommand);
+remoteControl.pressButton(); // Light on
+
+remoteControl.setCommand(turnOffCommand);
+remoteControl.pressButton(); // Light off
